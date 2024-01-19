@@ -1,0 +1,39 @@
+<header class="st-header q-pa-sm">
+    <h1 class="st-header__title text-h3">Finance dashboard</h1>
+</header>
+<div class="row">
+    <div class="st-col col-12 col-sm st-module">
+        <h6>Start date<br></h6>
+        <q-input id="iyclv" :clearable="true" :filled="true" label="Pick a date" v-model="start_date">
+            <q-icon id="iywra" class="cursor-pointer" name="event">
+                <q-popup-proxy>
+                    <q-date id="iv0xg" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="start_date"></q-date>
+                </q-popup-proxy>
+            </q-icon>
+        </q-input>
+    </div>
+    <div class="st-col col-12 col-sm st-module">
+        <h6>End date</h6>
+        <q-input id="ig3zp" :clearable="true" :filled="true" label="Pick a date" v-model="end_date">
+            <q-icon id="iuirw" class="cursor-pointer" name="event">
+                <q-popup-proxy>
+                    <q-date id="i6v3o" v-model="end_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
+                </q-popup-proxy>
+            </q-icon>
+        </q-input>
+    </div>
+    <div class="st-col col-12 col-sm st-module">
+        <h6>Symbol<br></h6>
+        <q-select id="ibuhj" :clearable="true" label="Choices" :use-chips="false" :use-input="true" :options="symbols" v-model="selected_symbol"></q-select>
+    </div>
+</div>
+<div class="row">
+    <div class="st-col col-9 st-module">
+        <plotly id="iw33o" data="W3sieCI6IiRfe3ByaWNlc190aWNrc30iLCJ5IjoiJF97cHJpY2VzX2Fycn0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJUcmFjZSJ9XQ==" config="e30=" layout="eyJ0aXRsZSI6Ik15IENoYXJ0In0="></plotly>
+    </div>
+    <div class="st-col col-3 col-sm st-module">
+        <st-big-number id="iltsg" title="Value change" :number="period_diff"></st-big-number>
+        <div class="st-col col-12 col-sm st-module"></div>
+        <p>{{news}}<br></p>
+    </div>
+</div>

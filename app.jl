@@ -1,14 +1,8 @@
 module App
 # set up Genie development environment
 using GenieFramework, Dates, DataFrames
-include("etf-analysis.jl")
+include("stock-analysis.jl")
 @genietools
-
-# add your data analysis code
-function mean_value(x)
-    sum(x) / length(x)
-end
-
 
 # add reactive code to make the UI interactive
 @app begin

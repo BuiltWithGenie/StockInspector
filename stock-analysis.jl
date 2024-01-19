@@ -23,7 +23,7 @@ end
 
 # ╔═╡ 6a41b8b1-f492-43f0-9a1a-74da21b1a03f
 function plot_layout(title="") 
-    l =  Layout(
+    l =  PlotlyJS.Layout(
         title_text = "<b>$(title)</b>",
         paper_bgcolor =:white,
         plot_bgcolor =:white,
@@ -91,7 +91,8 @@ cor_matrix = get_correlation(prices)
 # ╔═╡ 35ef71fe-53ee-4e9c-8b92-abe315a342c6
 begin
 traced = heatmap(prices,  z=cor_matrix)
-	Plot(traced, Layout(width=600,height=500))
+	Plot(traced, PlotlyJS.Layout(width=600,height=500))
+
 end
 
 # ╔═╡ 741c482e-68a1-4fa3-9ac9-51f5d2c3912d

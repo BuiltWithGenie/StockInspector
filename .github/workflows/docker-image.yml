@@ -21,7 +21,7 @@ jobs:
       # Extract app name from project.toml
       - name: Extract app name from project.toml
         id: project_name
-        run: echo "::set-output name=APP_NAME::$(sed -n 's/^name = \"\([^\"]*\)\"/\1/p' Project.toml)"
+        run: echo "::set-output name=APP_NAME::$(sed -n 's/^imgname = \"\([^\"]*\)\"/\1/p' Project.toml)"
 
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag pjgim/${{ steps.project_name.outputs.APP_NAME }}:${{ steps.project_version.outputs.VERSION }}

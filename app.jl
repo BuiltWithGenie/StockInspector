@@ -3,31 +3,44 @@ module App
 using GenieFramework, Dates, DataFrames
 include("stock-analysis.jl")
 @genietools
+symbols = [
+    "AAPL", "TSLA", "MSFT", "A", "AAL", "AAP", "ABBV", "ABC", "ABMD", "ABT",
+    "ACN", "ADBE", "ADI", "ADM", "ADP", "ADSK", "AEE", "AEP", "AES", "AFL",
+    "AIG", "AIZ", "AJG", "AKAM", "ALB", "ALGN", "ALK", "ALL", "ALLE", "ALXN",
+    "AMAT", "AMCR", "AMD", "AME", "AMGN", "AMP", "AMT", "AMZN", "ANET", "ANSS",
+    "ANTM", "AON", "AOS", "APA", "APD", "APH", "APTV", "ARE", "ATO", "ATVI",
+    "AVB", "AVGO", "AVY", "AWK", "AXP", "AZO", "BA", "BAC", "BAX", "BBY",
+    "BDX", "BEN", "BF.B", "BIIB", "BIO", "BK", "BKNG", "BKR", "BLK", "BLL",
+    "BMY", "BR", "BRK.B", "BSX", "BWA", "BXP", "C", "CAG", "CAH", "CARR",
+    "CAT", "CB", "CBOE", "CBRE", "CCI", "CCL", "CDNS", "CDW", "CE", "CERN",
+    "CF", "CFG", "CHD", "CHRW", "CHTR", "CI", "CINF", "CL", "CLX", "CMA"
+]
 
 # add reactive code to make the UI interactive
 @app begin
-    # reactive variables are tagged with @in and @out
-    @in N = 0
-    @in start_date = "2023-01-01"
-    @in end_date = "2024-01-01"
-    @out msg = "The average is 0."
-    @out tabdata = DataTable()
-    @out symbols = ["AAPL","NFLX","TSLA"]
-    @in selected_symbol = "AAPL"
-    @out prices = DataFrame()
-    @out prices_arr = [1.1,2]
-    @out prices_ticks = [1,2]
+    @in start_date = "2021-01-01"
+    @in end_date = "2022-01-01"
+    @out stocks = symbols
+    @in selected_stock = "AAPL"
+    @out prices = DataFrame(ticker=[], close=[], timestamp=[], ma20=[])
+    @out endval = 0.0
     @out period_diff = 0.0
-    @out news = ""
-    @onchange selected_symbol, start_date, end_date begin
-        prices = get_symbol_prices([selected_symbol], start_date, end_date)
-        prices_arr = prices[!, :close]
-        prices_ticks = collect(1:length(prices_arr))
+    @out percent_return = 0.0
+    @out avgval = 0.0
+    @out ma20 = [1.0,2.0]
+    @out news = [Dict()]
+    @onchange isready, start_date, end_date, selected_stock begin
+        prices = get_symbol_prices([selected_stock], start_date, end_date)
         monthly = get_monthly_prices!(prices)
-        period_diff = round(get_period_diff(monthly)[!,:total][1], digits=3)
-        @show period_diff
-        news = get_news([selected_symbol]) |> string
+        endval = round(prices[!,:close][end], digits=3)
+        period_diff = round(prices[!,:close][end] - prices[!,:close][1], digits=3)
+        prices[!,:ma20] = moving_average(prices, :close,20)
+        ma20 = prices[!,:ma20]
+        percent_return = round((prices[!,:close][end] - prices[!,:close][1]) / prices[!,:close][1] * 100, digits=3)
+        avgval = round(mean(prices[!,:close]), digits=3)
+        news = get_news([selected_stock])[1] |> convert_to_serializable
     end
+
 end
 
 # register a new route and the page that will be

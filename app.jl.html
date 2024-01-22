@@ -1,39 +1,56 @@
 <header class="st-header q-pa-sm">
-    <h1 class="st-header__title text-h3">Finance dashboard</h1>
+    <h1 class="st-header__title text-h3">Stock inspector</h1>
 </header>
 <div class="row">
     <div class="st-col col-12 col-sm st-module">
-        <h6>Start date<br></h6>
-        <q-input id="iyclv" :clearable="true" :filled="true" label="Pick a date" v-model="start_date">
-            <q-icon id="iywra" class="cursor-pointer" name="event">
-                <q-popup-proxy>
-                    <q-date id="iv0xg" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="start_date"></q-date>
-                </q-popup-proxy>
-            </q-icon>
-        </q-input>
+        <st-big-number id="ife32" title="End price" :number="endval"></st-big-number>
     </div>
     <div class="st-col col-12 col-sm st-module">
-        <h6>End date</h6>
-        <q-input id="ig3zp" :clearable="true" :filled="true" label="Pick a date" v-model="end_date">
-            <q-icon id="iuirw" class="cursor-pointer" name="event">
-                <q-popup-proxy>
-                    <q-date id="i6v3o" v-model="end_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
-                </q-popup-proxy>
-            </q-icon>
-        </q-input>
+        <st-big-number id="ire51" title="Avg. price" :number="avgval"></st-big-number>
     </div>
     <div class="st-col col-12 col-sm st-module">
-        <h6>Symbol<br></h6>
-        <q-select id="ibuhj" :clearable="true" label="Choices" :use-chips="false" :use-input="true" :options="symbols" v-model="selected_symbol"></q-select>
+        <st-big-number id="i3b6u" title="Total growth" :number="period_diff"></st-big-number>
+    </div>
+    <div class="st-col col-12 col-sm st-module">
+        <st-big-number id="i4x8f" title="Return %" :number="percent_return"></st-big-number>
     </div>
 </div>
 <div class="row">
-    <div class="st-col col-9 st-module">
-        <plotly id="iw33o" data="W3sieCI6IiRfe3ByaWNlc190aWNrc30iLCJ5IjoiJF97cHJpY2VzX2Fycn0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJUcmFjZSJ9XQ==" config="e30=" layout="eyJ0aXRsZSI6Ik15IENoYXJ0In0="></plotly>
+    <div id="ijqcc" class="st-col col-sm st-module">
+        <q-select id="i7dcn" label="Stock" :options="stocks" v-model="selected_stock"></q-select>
+        <q-input id="iwdxh" :clearable="true" :filled="true" label="Start date" v-model="start_date">
+            <q-icon id="ir0is" class="cursor-pointer" name="event">
+                <q-popup-proxy>
+                    <q-date id="ivhpb" v-model="start_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
+                </q-popup-proxy>
+            </q-icon>
+        </q-input>
+        <q-input id="ilobx" :clearable="true" :filled="true" label="End date" v-model="end_date">
+            <q-icon id="ihxzz" class="cursor-pointer" name="event">
+                <q-popup-proxy>
+                    <q-date id="ilqcv" v-model="end_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
+                </q-popup-proxy>
+            </q-icon>
+        </q-input>
     </div>
-    <div class="st-col col-3 col-sm st-module">
-        <st-big-number id="iltsg" title="Value change" :number="period_diff"></st-big-number>
-        <div class="st-col col-12 col-sm st-module"></div>
-        <p>{{news}}<br></p>
+    <div id="ik0gl" class="st-col col-sm st-module">
+        <plotly id="ikr4v" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3twcmljZXMuY2xvc2V9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGFpbHkgcHJpY2UifSx7IngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3ttYTIwfSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6Ik1BICgyMCkifV0=" config="e30=" layout="eyJ0aXRsZSI6IlByaWNlIGNoYXJ0Iiwic2hvd2xlZ2VuZCI6dHJ1ZX0="></plotly>
+    </div>
+    <div id="ispc3" class="st-col col-sm st-module">
+        <h6>News</h6>
+        <q-scroll-area id="ij94k">
+            <q-list id="ikfgs" class="rounded-borders" :bordered="true">
+                <q-item v-for="newsItem in news" :key="newsItem.Link" id="ip7xd" :clickable="true">
+                    <q-item-section id="ie788">
+                        <q-item-label id="i0vr2" class="text-h6 q-mb-xs"><a :href="newsItem.Link" id="iy5iq"> {{ newsItem.Title }}</a></q-item-label>
+                        <q-item-label id="iyzgx" class="text-caption">{{ newsItem.Timestamp }}</q-item-label>
+                        <q-item-label id="im8yd" :caption="true" :lines="2">{{ newsItem.Publisher }}</q-item-label>
+                        <q-item-label id="idqi5" :caption="true" :lines="2">Symbols: {{ newsItem.Symbols.join(', ') }}</q-item-label>
+                    </q-item-section>
+                    <q-item-section id="iwsnh" :side="true" :top="true">
+                    </q-item-section>
+                </q-item>
+            </q-list>
+        </q-scroll-area>
     </div>
 </div>

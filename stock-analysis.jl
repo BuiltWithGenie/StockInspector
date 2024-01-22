@@ -15,13 +15,15 @@ end
 
 # ╔═╡ 0cdc0c2b-4990-448b-be62-e83b01080cf1
 begin
-start_date = "2022-01-01"
+start_date = "2023-01-01"
 end_date = "2024-01-01"
 symbols = ["AAPL","NFLX","TSLA"]
 global prices = get_symbol_prices(symbols, start_date, end_date)
 end
 
 # ╔═╡ 6a41b8b1-f492-43f0-9a1a-74da21b1a03f
+# ╠═╡ skip_as_script = true
+#=╠═╡
 function plot_layout(title="") 
     l =  PlotlyJS.Layout(
         title_text = "<b>$(title)</b>",
@@ -47,31 +49,39 @@ function plot_layout(title="")
                     ])))
     return l
 end;
+  ╠═╡ =#
 
 # ╔═╡ 4a43fd49-66a8-48c5-a011-991af53fb969
+#=╠═╡
 
 Plot(prices, x=:timestamp,y=:close,group=:ticker, plot_layout())
+  ╠═╡ =#
 
-# ╔═╡ 14fcee89-199e-48b4-8a13-ac8ca9931dc0
-begin
+# ╔═╡ ae736349-ef84-4bc5-a448-f1735ce4ef23
 function moving_average(df::AbstractDataFrame, column::Symbol, window_size::Int)
     return [mean(df[!,column][max(1, i-window_size+1):i]) for i in 1:size(df, 1)]
 end
 
+# ╔═╡ 14fcee89-199e-48b4-8a13-ac8ca9931dc0
+#=╠═╡
+begin
 # Add a 20-day moving average to the DataFrame
 prices[!, :ma20] = combine(groupby(prices,:ticker)) do gdf 
  	moving_average(gdf, :close, 20)
 end[!, :x1]
 Plot(prices, x=:timestamp,y=:ma20,group=:ticker, plot_layout())
 end
+  ╠═╡ =#
 
 # ╔═╡ 09d3292b-caca-4bff-b7cc-48ede0a0aa9d
+#=╠═╡
 begin
 	  close_trace = scatter(prices, x=:timestamp, y=:close, group=:ticker, mode="lines")
 	  ma_trace = scatter(prices, x=:timestamp, y=:ma20, group=:ticker, mode="lines",  line=attr(dash="dash"))
 	    Plot(vcat([close_trace, ma_trace]...), plot_layout("Stock Price and Moving Average"))
 	
 end
+  ╠═╡ =#
 
 # ╔═╡ d8b6e9db-1ead-4a35-b8fb-fdca8528ae49
 
@@ -117,11 +127,13 @@ end
 monthly = get_monthly_prices!(prices)
 
 # ╔═╡ 772411f0-9c1e-43f4-8885-d33a472c3081
+#=╠═╡
 begin
 	  trace = scatter(monthly, x=:timestamp, y=:returns, group=:ticker, mode="lines")
 	Plot(trace, plot_layout("Monthly returns"))
 	
 end
+  ╠═╡ =#
 
 # ╔═╡ d9b7d7e0-52a5-4c67-af33-dd967d78f4fb
 function get_period_diff(monthly::AbstractDataFrame)
@@ -140,8 +152,51 @@ function get_news(symbols::Vector{String})
 	[search_news(s) for s in symbols]
 end
 
+# ╔═╡ 6dc5a9bf-f030-4026-a06c-386255123dd0
+
+
 # ╔═╡ 2cfedfa3-d6c3-4257-bbc3-22049dc04287
 get_news(["MSFT","AAPL"])
+
+# ╔═╡ 41a74cad-5af2-419a-beae-679043f3c24c
+function format_news(news_items)
+    formatted_text = ""
+
+    for news in news_items
+        for item in news
+            formatted_text *= "Title: \t\t $(item.title)\n"
+            formatted_text *= "Timestamp: \t $(item.timestamp)\n"
+            formatted_text *= "Publisher: \t $(item.publisher)\n"
+            formatted_text *= "Link: \t\t $(item.link)\n"
+            formatted_text *= "Symbols: \t $(join(item.symbols, ", "))\n\n"
+        end
+    end
+
+    return formatted_text
+end
+
+
+# ╔═╡ 4ab3ab1b-de0a-4553-98d1-d6c0969e5b30
+format_news(get_news(["MSFT","AAPL"]))
+
+# ╔═╡ f23873a1-85d1-4f63-8174-c5ddab6e7dc6
+function convert_to_serializable(news_items::YFinance.YahooNews{YFinance.NewsItem, 1})
+    # Map each news item to a Dict
+    serializable_news = map(news_items) do item
+        Dict(
+            "Title"     => item.title,
+            "Timestamp" => item.timestamp,
+            "Publisher" => item.publisher,
+            "Link"      => item.link,
+            "Symbols"   => item.symbols
+        )
+    end
+
+    return serializable_news
+end
+
+# ╔═╡ 1c917ed5-d1ed-4442-b1b9-3268d5ec40f5
+convert_to_serializable(get_news(["MSFT"])[1])
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -768,6 +823,7 @@ version = "17.4.0+2"
 # ╠═0cdc0c2b-4990-448b-be62-e83b01080cf1
 # ╠═6a41b8b1-f492-43f0-9a1a-74da21b1a03f
 # ╠═4a43fd49-66a8-48c5-a011-991af53fb969
+# ╠═ae736349-ef84-4bc5-a448-f1735ce4ef23
 # ╠═14fcee89-199e-48b4-8a13-ac8ca9931dc0
 # ╠═09d3292b-caca-4bff-b7cc-48ede0a0aa9d
 # ╠═d8b6e9db-1ead-4a35-b8fb-fdca8528ae49
@@ -783,6 +839,11 @@ version = "17.4.0+2"
 # ╠═d9b7d7e0-52a5-4c67-af33-dd967d78f4fb
 # ╠═602e53c1-8fd4-4a1d-be39-9e82656a1cfc
 # ╠═998c1c22-08cb-43ef-b6a6-9118c9b43bbb
+# ╠═6dc5a9bf-f030-4026-a06c-386255123dd0
 # ╠═2cfedfa3-d6c3-4257-bbc3-22049dc04287
+# ╠═41a74cad-5af2-419a-beae-679043f3c24c
+# ╠═4ab3ab1b-de0a-4553-98d1-d6c0969e5b30
+# ╠═f23873a1-85d1-4f63-8174-c5ddab6e7dc6
+# ╠═1c917ed5-d1ed-4442-b1b9-3268d5ec40f5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

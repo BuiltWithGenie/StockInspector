@@ -29,6 +29,7 @@ symbols = [
     @out avgval = 0.0
     @out ma20 = [1.0,2.0]
     @out news = [Dict()]
+    @in window = 365
     @onchange isready, start_date, end_date, selected_stock begin
         prices = get_symbol_prices([selected_stock], start_date, end_date)
         monthly = get_monthly_prices!(prices)
@@ -40,10 +41,18 @@ symbols = [
         avgval = round(mean(prices[!,:close]), digits=3)
         news = get_news([selected_stock])[1] |> convert_to_serializable
     end
-
+    @onchange window begin
+        start_date[!] = today() - Day(window) |> string # update variable without triggering the handler
+        @push start_date
+        end_date = today() |> string
+    end
 end
+
 
 # register a new route and the page that will be
 # loaded on access
 @page("/", "app.jl.html")
 end
+
+
+

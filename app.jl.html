@@ -34,6 +34,27 @@
         </q-input>
     </div>
     <div id="ik0gl" class="st-col col-sm st-module">
+<div class="row">
+        <!-- <q-select style="width:150px" dense id="i7dcn" label="Stock" :options="stocks" v-model="selected_stock"></q-select> -->
+        <!-- <q-input style="width:150px" dense id="iwdxh" :clearable="true" :filled="true" label="Start date" v-model="start_date"> -->
+        <!--     <q-icon id="ir0is" class="cursor-pointer" name="event"> -->
+        <!--         <q-popup-proxy> -->
+        <!--             <q-date id="ivhpb" v-model="start_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date> -->
+        <!--         </q-popup-proxy> -->
+        <!--     </q-icon> -->
+        <!-- </q-input> -->
+        <!-- <q-input style="width:150px"  dense id="ilobx" :clearable="true" :filled="true" label="End date" v-model="end_date"> -->
+        <!--     <q-icon id="ihxzz" class="cursor-pointer" name="event"> -->
+        <!--         <q-popup-proxy> -->
+        <!--             <q-date id="ilqcv" v-model="end_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date> -->
+        <!--         </q-popup-proxy> -->
+        <!--     </q-icon> -->
+        <!-- </q-input> -->
+        <q-badge id="ilan9" style="margin-left:30px;cursor: pointer" v-on:click="window=7" label="1w"> </q-badge>
+        <q-badge id="inzp8" style="margin-left:10px;cursor: pointer" v-on:click="window=30" label="1m"> </q-badge>
+        <q-badge id="i89xf" style="margin-left:10px;cursor: pointer" v-on:click="window=365" label="1y"> </q-badge>
+        <q-badge id="in2b1" style="margin-left:10px;cursor: pointer" v-on:click="window=365*3" label="3y"> </q-badge>
+</div>
         <plotly id="ikr4v" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3twcmljZXMuY2xvc2V9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGFpbHkgcHJpY2UifSx7IngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3ttYTIwfSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6Ik1BICgyMCkifV0=" config="e30=" layout="eyJ0aXRsZSI6IlByaWNlIGNoYXJ0Iiwic2hvd2xlZ2VuZCI6dHJ1ZX0="></plotly>
     </div>
     <div id="ispc3" class="st-col col-sm st-module">

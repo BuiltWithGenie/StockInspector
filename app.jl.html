@@ -1,5 +1,5 @@
-<header class="st-header q-pa-sm">
-    <h1 class="st-header__title text-h3">Stock inspector</h1>
+<header class="st-header q-pa-sm" id="izaa">
+    <h1 class="st-header__title text-h3">Stock price inspector</h1>
 </header>
 <div class="row">
     <div class="st-col col-12 col-sm st-module">
@@ -34,17 +34,16 @@
         </q-input>
     </div>
     <div id="ik0gl" class="st-col col-sm st-module">
-<div class="row">
-
-<div style="height:10px;">
-        <q-badge id="ilan9" style="margin-left:30px;cursor: pointer" v-on:click="window=7" label="1w"> </q-badge>
-        <q-badge id="inzp8" style="margin-left:10px;cursor: pointer" v-on:click="window=30" label="1m"> </q-badge>
-        <q-badge id="i89xf" style="margin-left:10px;cursor: pointer" v-on:click="window=365" label="1y"> </q-badge>
-        <q-badge id="in2b1" style="margin-left:10px;cursor: pointer" v-on:click="window=365*3" label="3y"> </q-badge>
-</div>
-        <p style="margin-left:15%;font-weight:bold;font-size:15px">Time window: {{elapsed}}</p>
-</div>
-        <plotly id="ikr4v" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3twcmljZXMuY2xvc2V9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGFpbHkgcHJpY2UifSx7IngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3ttYTIwfSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6Ik1BICgyMCkifV0=" config="e30=" layout="eyJ0aXRsZSI6IlByaWNlIGNoYXJ0Iiwic2hvd2xlZ2VuZCI6dHJ1ZX0="></plotly>
+        <div class="row" id="iqqhi">
+            <div id="i7tgr">
+                <q-badge id="ilan9" v-on:click="window=7" label="1w"> </q-badge>
+                <q-badge id="inzp8" v-on:click="window=30" label="1m"> </q-badge>
+                <q-badge id="i89xf" v-on:click="window=365" label="1y"> </q-badge>
+                <q-badge id="in2b1" v-on:click="window=365*3" label="3y"> </q-badge>
+            </div>
+            <p id="iukz2">Time window: {{elapsed}}</p>
+        </div>
+        <plotly id="ikr4v" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3twcmljZXMuY2xvc2V9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGFpbHkgcHJpY2UifSx7IngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3ttYTIwfSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6IjIwIGRheSBhdmcuIn1d" config="e30=" layout="eyJ0aXRsZSI6IiIsInNob3dsZWdlbmQiOnRydWV9"></plotly>
     </div>
     <div id="ispc3" class="st-col col-sm st-module">
         <h6>News</h6>

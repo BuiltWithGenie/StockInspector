@@ -4,10 +4,10 @@ RUN useradd --create-home --shell /bin/bash genie
 RUN mkdir /home/genie/app
 COPY Project.toml /home/genie/app/
 WORKDIR /home/genie/app
+COPY . /home/genie/app
 RUN chown -R genie:genie /home/
 USER genie
-RUN julia -e "using Pkg; Pkg.activate(\".\"); Pkg.instantiate(); "
-COPY . /home/genie/app
+RUN julia -e "using Pkg; Pkg.activate(\".\"); Pkg.instantiate();Pkg.precompile()"
 EXPOSE 8000
 EXPOSE 80
 ENV JULIA_DEPOT_PATH "/home/genie/.julia"

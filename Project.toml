@@ -1,4 +1,4 @@
-name = "StockAnalysis"
+name = "StockInspector"
 imgname = "stock"
 version = "0.0.0"
 [deps]

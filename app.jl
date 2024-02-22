@@ -46,26 +46,25 @@ end
     @out elapsed = "1 year"
     @out stocks = symbols
     @in selected_stock = "AAPL"
-    @out prices = DataFrame(ticker=[], close=[], timestamp=[], ma20=[])
+    @in prices = DataFrame(ticker=[], close=[], timestamp=[], ma20=[])
     @out endval = 0.0
     @out period_diff = 0.0
     @out percent_return = 0.0
     @out avgval = 0.0
-    @out ma20 = [1.0,2.0]
     @out news = [Dict()]
     @in window = 365
     @onchange isready, start_date, end_date, selected_stock begin
-        prices = get_symbol_prices([selected_stock], start_date, end_date)
-        monthly = get_monthly_prices!(prices)
+        prices = get_symbol_prices([selected_stock], start_date, end_date) |> add_ma20!
+        @show prices.close
         endval = round(prices[!,:close][end], digits=3)
         period_diff = round(prices[!,:close][end] - prices[!,:close][1], digits=3)
-        prices[!,:ma20] = moving_average(prices, :close,20)
-        ma20 = prices[!,:ma20]
         percent_return = round((prices[!,:close][end] - prices[!,:close][1]) / prices[!,:close][1] * 100, digits=3)
         avgval = round(mean(prices[!,:close]), digits=3)
+        elapsed = time_elapsed(Dates.value(Dates.Day(Date(end_date)-Date(start_date))))
+        @show elapsed, Dates.value(Dates.Day(Date(end_date)-Date(start_date)))
+    end
+    @onchange isready, selected_stock begin
         news = get_news([selected_stock])[1] |> convert_to_serializable
-    elapsed = time_elapsed(Dates.value(Dates.Day(Date(end_date)-Date(start_date))))
-    @show elapsed, Dates.value(Dates.Day(Date(end_date)-Date(start_date)))
     end
     @onchange window begin
         start_date[!] = today() - Day(window) |> string # update variable without triggering the handler

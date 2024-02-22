@@ -18,14 +18,14 @@
 <div class="row">
     <div id="ijqcc" class="st-col col-sm st-module">
         <q-select id="i7dcn" label="Stock" :options="stocks" v-model="selected_stock"></q-select>
-        <q-input id="iwdxh" :clearable="true" :filled="true" label="Start date" v-model="start_date">
+        <q-input id="iwdxh" :clearable="false" :filled="true" label="Start date" v-model="start_date">
             <q-icon id="ir0is" class="cursor-pointer" name="event">
                 <q-popup-proxy>
                     <q-date id="ivhpb" v-model="start_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
                 </q-popup-proxy>
             </q-icon>
         </q-input>
-        <q-input id="ilobx" :clearable="true" :filled="true" label="End date" v-model="end_date">
+        <q-input id="ilobx" :clearable="false" :filled="true" label="End date" v-model="end_date">
             <q-icon id="ihxzz" class="cursor-pointer" name="event">
                 <q-popup-proxy>
                     <q-date id="ilqcv" v-model="end_date" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true"></q-date>
@@ -36,14 +36,14 @@
     <div id="ik0gl" class="st-col col-sm st-module">
         <div id="iqqhi" class="row">
             <div id="i7tgr">
-                <q-badge id="ilan9" v-on:click="window=7" label="1w"> </q-badge>
-                <q-badge id="inzp8" v-on:click="window=30" label="1m"> </q-badge>
-                <q-badge id="i89xf" v-on:click="window=365" label="1y"> </q-badge>
-                <q-badge id="in2b1" v-on:click="window=365*3" label="3y"> </q-badge>
+                <q-badge id="ilan9" v-on:click="window=7" label="1w"></q-badge>
+                <q-badge id="inzp8" v-on:click="window=30" label="1m"></q-badge>
+                <q-badge id="i89xf" v-on:click="window=365" label="1y"></q-badge>
+                <q-badge id="in2b1" v-on:click="window=365*3" label="3y"></q-badge>
             </div>
             <p id="iukz2">Time window: {{elapsed}}</p>
         </div>
-        <plotly id="ikr4v" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3twcmljZXMuY2xvc2V9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGFpbHkgcHJpY2UifSx7IngiOiIkX3twcmljZXMudGltZXN0YW1wfSIsInkiOiIkX3ttYTIwfSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6IjIwIGRheSBhdmcuIn1d" config="e30=" layout="eyJ0aXRsZSI6IiIsInNob3dsZWdlbmQiOnRydWV9"></plotly>
+        <plotly id="ikr4v" data="W3sieCI6IiRfe3ByaWNlcy50aW1lc3RhbXB9IiwieSI6IiRfe3ByaWNlcy5jbG9zZX0iLCJ0eXBlIjoic2NhdHRlciIsIm5hbWUiOiJDbG9zaW5nIHByaWNlIn0seyJ4IjoiJF97cHJpY2VzLnRpbWVzdGFtcH0iLCJ5IjoiJF97cHJpY2VzLm1hMjB9IiwidHlwZSI6InNjYXR0ZXIiLCJuYW1lIjoiMjAgZGF5IGF2Zy4ifV0=" config="e30=" layout="eyJ0aXRsZSI6IiIsInNob3dsZWdlbmQiOnRydWV9"></plotly>
     </div>
     <div id="ispc3" class="st-col col-sm st-module">
         <h6>News</h6>
@@ -56,10 +56,10 @@
                         <q-item-label id="im8yd" :caption="true" :lines="2">{{ newsItem.Publisher }}</q-item-label>
                         <q-item-label id="idqi5" :caption="true" :lines="2">Symbols: {{ newsItem.Symbols.join(', ') }}</q-item-label>
                     </q-item-section>
-                    <q-item-section id="iwsnh" :side="true" :top="true">
-                    </q-item-section>
+                    <q-item-section id="iwsnh" :side="true" :top="true"></q-item-section>
                 </q-item>
             </q-list>
         </q-scroll-area>
     </div>
 </div>
+<header class="st-module"></header>

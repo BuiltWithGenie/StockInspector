@@ -17,7 +17,7 @@ end
 begin
 start_date = "2023-01-01"
 end_date = "2024-01-01"
-symbols = ["AAPL","NFLX","TSLA"]
+symbols = ["AAPL"]
 global prices = get_symbol_prices(symbols, start_date, end_date)
 end
 
@@ -62,6 +62,11 @@ function moving_average(df::AbstractDataFrame, column::Symbol, window_size::Int)
     return [mean(df[!,column][max(1, i-window_size+1):i]) for i in 1:size(df, 1)]
 end
 
+# ╔═╡ 192693d7-74bf-446a-9eac-b84039eaa85c
+add_ma20!(prices) = hcat(prices, DataFrame( :ma20=>moving_average(prices, :close,20)))
+
+
+
 # ╔═╡ 14fcee89-199e-48b4-8a13-ac8ca9931dc0
 #=╠═╡
 begin
@@ -72,6 +77,10 @@ end[!, :x1]
 Plot(prices, x=:timestamp,y=:ma20,group=:ticker, plot_layout())
 end
   ╠═╡ =#
+
+# ╔═╡ d99aa509-3d27-40fd-8ecc-8c2a15468b5e
+groupby(prices,:ticker)
+
 
 # ╔═╡ 09d3292b-caca-4bff-b7cc-48ede0a0aa9d
 #=╠═╡
@@ -824,7 +833,10 @@ version = "17.4.0+2"
 # ╠═6a41b8b1-f492-43f0-9a1a-74da21b1a03f
 # ╠═4a43fd49-66a8-48c5-a011-991af53fb969
 # ╠═ae736349-ef84-4bc5-a448-f1735ce4ef23
+# ╠═192693d7-74bf-446a-9eac-b84039eaa85c
+# ╠═4ebdb854-27a4-4471-b182-b4a7b8b770a9
 # ╠═14fcee89-199e-48b4-8a13-ac8ca9931dc0
+# ╠═d99aa509-3d27-40fd-8ecc-8c2a15468b5e
 # ╠═09d3292b-caca-4bff-b7cc-48ede0a0aa9d
 # ╠═d8b6e9db-1ead-4a35-b8fb-fdca8528ae49
 # ╠═372bed53-900b-4c67-b4bd-cc0be0343de0

@@ -54,7 +54,11 @@ end
     @out news = [Dict()]
     @in window = 365
     @onchange isready, start_date, end_date, selected_stock begin
+        try
         prices = get_symbol_prices([selected_stock], start_date, end_date) |> add_ma20!
+    catch e
+        @show e
+    end
         @show prices.close
         endval = round(prices[!,:close][end], digits=3)
         period_diff = round(prices[!,:close][end] - prices[!,:close][1], digits=3)

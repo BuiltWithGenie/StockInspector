@@ -1,6 +1,6 @@
 ## Stock inspector dashboard
 
-A dashboard to inspect stocks with data from Yahoo Finance.
+A dashboard to inspect stocks with data from Yahoo Finance. See the video tutorial [here](https://www.youtube.com/watch?v=4ypKzNagGXk)
 
 ## Installation
 

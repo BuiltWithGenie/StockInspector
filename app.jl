@@ -51,7 +51,7 @@ end
     @out period_diff = 0.0
     @out percent_return = 0.0
     @out avgval = 0.0
-    @out news = [Dict()]
+    @out news = Dict[]
     @in window = 365
     @onchange isready, start_date, end_date, selected_stock begin
         try

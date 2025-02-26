@@ -12,5 +12,9 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Stipple = "4acbeb90-81a0-11ea-1966-bdaff8155998"
 YFinance = "e4b3b0a2-f9a3-42f3-aabb-32142cceaf77"
 
+[compat]
+GenieFramework = "2"
+julia = "1"
+
 [Genie]
 instantiated_pwd = "/Users/pere/genie/genieawesome/FinanceDashboard"
